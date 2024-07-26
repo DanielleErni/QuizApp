@@ -4,9 +4,11 @@ import UserDashboard from "./pages/User/UserDashboard"
 import { axiosSample } from "./axios/axiosConfig"
 import { useState, useEffect } from "react"
 
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import {Routes, Route} from "react-router-dom"
 
 import { useDispatch, useSelector } from "react-redux"
+import LoginForm from "./components/LoginForm"
+import AdminDashboard from "./pages/Admin/AdminDashboard"
 
 /*
       <style>
@@ -23,7 +25,7 @@ const App = () => {
 
   const sample = async()=>{
     await axiosSample.get()
-      .then(res=>setData(res.data))
+      .then(res=>setData(res))
       .catch(err=>console.log(err))
   }
 
@@ -37,16 +39,24 @@ const App = () => {
     <div className='font-bold bg-black h-[100vh]'>
 
       <style>
-        {`* {outline: solid red;}`}
+        {
+          /*
+            `* {outline: solid red;}`
+          */
+        }
       </style>
-      <UserDashboard/>
-      <Router>
         <Routes>
-          <Route>
-            <Route path="/" element={<UserDashboard/>}/>
-          </Route>
+          
+          <Route path="/" element={<LandingPage/>}/>
+
+          {/*private routes */}
+
+          {/*guest user */}
+          <Route path="/UserDashBoard" element={<UserDashboard/>}/>
+          {/*admin routes */}
+          <Route path="/AdminDashBoard" element={<AdminDashboard/>}/>
+          
         </Routes>
-      </Router>
     </div>
   )
 }

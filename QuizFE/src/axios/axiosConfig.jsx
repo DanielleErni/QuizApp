@@ -11,5 +11,4 @@ const axiosSample = axios.create({
     baseURL: baseUrl
 })
 
-
 export {axiosSample}
