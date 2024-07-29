@@ -5,10 +5,10 @@ axios.defaults.headers.common['Accept'] = 'application/json';
 
 const baseUrl = import.meta.env.VITE_BackEndUrl
 
-console.log(baseUrl)
+// console.log(baseUrl)
 
-const axiosSample = axios.create({
-    baseURL: baseUrl
+const UserAuthenticate = axios.create({
+    baseURL: `${baseUrl}/User`
 })
 
-export {axiosSample}
+export {UserAuthenticate}
