@@ -1,37 +1,55 @@
 import { useState } from "react"
+
 import NavButton from "../../components/NavButton"
 import QuizListComp from "../../components/QuizListComp"
-import { useNavigate } from "react-router-dom"
 import ModalSettings from "../../components/ModalSettings"
+
+import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+
+import { AxiosGetQuizList } from "../../axios/axiosConfig"
 
 
 const AdminDashboard = () => {
 
   const [ToggleSettings, setToggleSettings] = useState(false)
   const [IsNavDataVisible, SetIsNavDataVisible] = useState(false)
+  const [QuizList, setQuizList] = useState([])
+  
   const Navigate = useNavigate();
+  const user = useSelector((state) => state.user.User);
+  //console.log(user.Role)
 
-  const HandleNavigateUser = () =>{
-    sampleProps[0].Role === "user" ? 
-      Navigate('/quiz')
-      :
-      setToggleSettings(true)
-  }
+    const HandleNavigateUser = () =>{
+      sampleProps[0].Role === "user" ? 
+        Navigate('/quiz')
+        :
+        setToggleSettings(true)
+    }
 
-  const toggleNavButton = () =>{
-    SetIsNavDataVisible(!IsNavDataVisible)
-    //console.log(IsNavDataVisible)
-  }
+    const toggleNavButton = () =>{
+      SetIsNavDataVisible(!IsNavDataVisible)
+    }
+    
+    const getQuizList = async() =>{
+      await AxiosGetQuizList.get()
+        .then(res=>setQuizList(res.data))
+        .catch(err=>console.log(err))
+    }
+    useState(()=>{
+      getQuizList()
+      console.log(QuizList)
+    },[])
 
     var sampleProps = [
-        {
-          Title: "sample quiz name",
-          Questions: ["sample"],
-          Answers: ["sample"],
-          Role: "admin",
-          Logo: "https://www.svgrepo.com/show/527439/settings.svg"
-        }
-      ]
+      {
+        Title: "sample quiz name",
+        Questions: ["sample"],
+        Answers: ["sample"],
+        Role: "admin",
+        Logo: "https://www.svgrepo.com/show/527439/settings.svg"
+      }
+    ]
       
     return (
     <>

@@ -6,7 +6,7 @@ namespace Quiz.Api.Models;
 public class QuizEntity
 {
     [Key]
-    public Guid QuizId { get; set; }
+    public int QuizId { get; set; }
 
     [Required]
     public required string QuizName { get; set; }

@@ -12,8 +12,8 @@ using Quiz.Api.Data;
 namespace Quiz.Api.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20240729063209_InitialMigrate")]
-    partial class InitialMigrate
+    [Migration("20240730034956_InitialMigrateV7")]
+    partial class InitialMigrateV7
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,11 @@ namespace Quiz.Api.Migrations
 
             modelBuilder.Entity("Quiz.Api.Models.QuestionEntity", b =>
                 {
-                    b.Property<Guid>("QuestionId")
+                    b.Property<int>("QuestionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuestionId"));
 
                     b.Property<string>("Answer")
                         .IsRequired()
@@ -39,21 +41,53 @@ namespace Quiz.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("QuizId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
 
                     b.HasKey("QuestionId");
 
                     b.HasIndex("QuizId");
 
                     b.ToTable("Questions");
+
+                    b.HasData(
+                        new
+                        {
+                            QuestionId = 1,
+                            Answer = "metro manila",
+                            Question = "What is the capital of Philippines",
+                            QuizId = 1
+                        },
+                        new
+                        {
+                            QuestionId = 2,
+                            Answer = "Russia",
+                            Question = "Which country has the largest land area?",
+                            QuizId = 2
+                        },
+                        new
+                        {
+                            QuestionId = 3,
+                            Answer = "Nile",
+                            Question = "What is the longest river in the world?",
+                            QuizId = 1
+                        },
+                        new
+                        {
+                            QuestionId = 4,
+                            Answer = "Africa",
+                            Question = "Which continent is known as the 'Dark Continent'?",
+                            QuizId = 1
+                        });
                 });
 
             modelBuilder.Entity("Quiz.Api.Models.QuizEntity", b =>
                 {
-                    b.Property<Guid>("QuizId")
+                    b.Property<int>("QuizId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizId"));
 
                     b.Property<string>("QuizName")
                         .IsRequired()
@@ -62,6 +96,18 @@ namespace Quiz.Api.Migrations
                     b.HasKey("QuizId");
 
                     b.ToTable("Quiz");
+
+                    b.HasData(
+                        new
+                        {
+                            QuizId = 1,
+                            QuizName = "Geography"
+                        },
+                        new
+                        {
+                            QuizId = 2,
+                            QuizName = "GeographyV2"
+                        });
                 });
 
             modelBuilder.Entity("Quiz.Api.Models.UsersEntity", b =>
@@ -74,6 +120,10 @@ namespace Quiz.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -81,6 +131,22 @@ namespace Quiz.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9bcfc4f0-5e96-4ac1-96a6-06b66a160e34"),
+                            Password = "admin",
+                            Role = "admin",
+                            Username = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("a15a3e7a-23a4-4a08-87ae-a22d36f3b9de"),
+                            Password = "user",
+                            Role = "user",
+                            Username = "user"
+                        });
                 });
 
             modelBuilder.Entity("Quiz.Api.Models.QuestionEntity", b =>

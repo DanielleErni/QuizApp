@@ -6,7 +6,7 @@ namespace Quiz.Api.Models;
 public class QuestionEntity
 {
         [Key]
-        public Guid QuestionId { get; set; }
+        public int QuestionId { get; set; }
 
         [Required]
         public required string Question { get; set; }
@@ -15,8 +15,8 @@ public class QuestionEntity
         public required string Answer { get; set; }
 
         
-        public Guid QuizId { get; set; }
+        public int QuizId { get; set; }
 
         [ForeignKey("QuizId")]
-        public required QuizEntity Quiz { get; set; }
+        public QuizEntity? Quiz { get; set; }
 }

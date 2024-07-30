@@ -26,9 +26,8 @@ namespace Quiz.Api.Controllers
             }
             var userData = await _context.Users
                                     .FirstOrDefaultAsync(u => u.Username == user.Username && u.Password == user.Password);
-
             if(userData==null){return Unauthorized("Credentials Error");}
-            Console.WriteLine(userData);
+            
 
 
             return Ok(userData.Role);

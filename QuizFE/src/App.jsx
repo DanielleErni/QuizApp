@@ -1,9 +1,7 @@
-import LandingPage from "./pages/LandingPage"
-import UserDashboard from "./pages/User/UserDashboard"
-
 import {Routes, Route} from "react-router-dom"
 
-import { useDispatch, useSelector } from "react-redux"
+import LandingPage from "./pages/LandingPage"
+import UserDashboard from "./pages/User/UserDashboard"
 import AdminDashboard from "./pages/Admin/AdminDashboard"
 
 /*
@@ -13,9 +11,6 @@ import AdminDashboard from "./pages/Admin/AdminDashboard"
 */
 
 const App = () => {
-
-  const dispatch = useDispatch()
-  const role = useSelector((state)=> state.questions.user)
 
   return (
     <div className='font-bold bg-black h-[100vh]'>

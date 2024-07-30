@@ -1,28 +1,37 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { UserAuthenticate } from "../axios/axiosConfig"
 import {useNavigate} from 'react-router-dom'
+import { useSelector, useDispatch } from "react-redux"
+import { setUser } from "../redux/userSlice"
 
 const LoginForm = () => {
 
   const [Username, setUsername] = useState('')
   const [Password, setPassword] = useState('')
 
-  const [Data, setData] = useState(null)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const navigate = useNavigate()
-
-  const sendData = () =>{
+  const sendData = async() =>{
     if(Username == '' || Password == ''){
       alert('Please fill in all fields')
+      return
     }
-    UserAuthenticate.post('',{
+    await UserAuthenticate.post('',{
       Username: Username,
       Password: Password
     })
-      .then(res=>{setData(res.data); console.log(Data); if(Data==="admin"){navigate('/adminDashBoard')}; if(Data==="user"){navigate('/userDashBoard')};})
-      .catch(err=>console.log(err.data))
+      .then(res=>{
+        dispatch(setUser({Username: Username, Role: res.data}));
+        if (res.data === "admin" || res.data === "mod") { // Access Role property
+          navigate('/adminDashBoard');
+        } else if (res.data === "user") {
+          navigate('/userDashBoard');
+        }
+      })
+      .catch(err=>console.log(err.response.data))
   }
-  
+
   return (
     <div className="bg-[#D9D9D9] h-min m-[1.5rem] rounded-md pb-[0.9rem] pt-[0.8rem] px-[1rem] flex flex-col">
 
@@ -58,6 +67,7 @@ const LoginForm = () => {
         <button
           className="text-black bg-green-500 p-[0.3rem] px-[0.5rem] rounded-md border-[0.1rem] border-black"
           onClick={()=>{sendData()}}
+          
         >
           Login
         </button>
