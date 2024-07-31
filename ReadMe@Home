@@ -1,0 +1,10 @@
+HOme Server=localhost;Database=master;Trusted_Connection=True;
+
+DESKTOP-F62OVDN\\MSSQLSERVER01
+
+@Office
+"server=DESKTOP-CSKTFEA;database=QuizDB;Integrated Security=true;TrustServerCertificate=true;"
+
+
+@localhost
+"server=localhost;database=QuizAppDb;Integrated Security=true;TrustServerCertificate=true;"

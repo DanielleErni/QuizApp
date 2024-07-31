@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import NavButton from "../../components/NavButton"
 import QuizListComp from "../../components/QuizListComp"
@@ -15,13 +15,14 @@ const AdminDashboard = () => {
   const [ToggleSettings, setToggleSettings] = useState(false)
   const [IsNavDataVisible, SetIsNavDataVisible] = useState(false)
   const [QuizList, setQuizList] = useState([])
+
+  const user = useSelector(state => state.user.User);
+  console.log(user)
   
   const Navigate = useNavigate();
-  const user = useSelector((state) => state.user.User);
-  //console.log(user.Role)
 
     const HandleNavigateUser = () =>{
-      sampleProps[0].Role === "user" ? 
+      user.Role === "user" ? 
         Navigate('/quiz')
         :
         setToggleSettings(true)
@@ -33,23 +34,16 @@ const AdminDashboard = () => {
     
     const getQuizList = async() =>{
       await AxiosGetQuizList.get()
-        .then(res=>setQuizList(res.data))
+        .then(res=>{setQuizList(res.data)})
         .catch(err=>console.log(err))
     }
-    useState(()=>{
+
+    useEffect(()=>{
       getQuizList()
-      console.log(QuizList)
+      
     },[])
 
-    var sampleProps = [
-      {
-        Title: "sample quiz name",
-        Questions: ["sample"],
-        Answers: ["sample"],
-        Role: "admin",
-        Logo: "https://www.svgrepo.com/show/527439/settings.svg"
-      }
-    ]
+    //console.log(QuizList)
       
     return (
     <>
@@ -63,10 +57,19 @@ const AdminDashboard = () => {
           <NavButton toggleNavButton={toggleNavButton} IsNavDataVisible={IsNavDataVisible}/>
 
           <div className="bg-[#464545] h-[92.9vh] rounded-md p-[1rem]">
-          <QuizListComp 
-            sampleProps={sampleProps} 
-            HandleNavigateUser={HandleNavigateUser}
-          />
+
+          {QuizList.map((el, index)=>{
+            return (
+              <div key={index}>
+                <QuizListComp  
+                  quizData = {el}
+                  HandleNavigateUser={HandleNavigateUser}
+                  userRole={user.Role}
+                />
+              </div>
+            )
+          })}
+
           </div>
       </div>
       
