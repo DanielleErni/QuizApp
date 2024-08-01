@@ -1,8 +1,9 @@
 import {Routes, Route} from "react-router-dom"
 
 import LandingPage from "./pages/LandingPage"
-import UserDashboard from "./pages/User/UserDashboard"
-import AdminDashboard from "./pages/Admin/AdminDashboard"
+import Dashboard from "./pages/Dashboard"
+import CreateQuiz from "./pages/CreateQuiz"
+import EditQuiz from "./pages/EditQuiz"
 
 /*
       <style>
@@ -13,7 +14,7 @@ import AdminDashboard from "./pages/Admin/AdminDashboard"
 const App = () => {
 
   return (
-    <div className='font-bold bg-black h-[100vh]'>
+    <div className='font-bold bg-black p-[1rem]'>
 
       <style>
         {
@@ -27,11 +28,12 @@ const App = () => {
           <Route path="/" element={<LandingPage/>}/>
 
           {/*private routes */}
-
+          <Route path="/Dashboard" element={<Dashboard/>}/>
           {/*guest user */}
-          <Route path="/UserDashBoard" element={<UserDashboard/>}/>
+          
           {/*admin routes */}
-          <Route path="/AdminDashBoard" element={<AdminDashboard/>}/>
+          <Route path="/CreateQuiz" element={<CreateQuiz/>}/>
+          <Route path="/EditQuiz" element={<EditQuiz/>}/>
           
         </Routes>
     </div>

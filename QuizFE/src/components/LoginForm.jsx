@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { UserAuthenticate } from "../axios/axiosConfig"
 import {useNavigate} from 'react-router-dom'
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import { setUser } from "../redux/userSlice"
 
 const LoginForm = () => {
@@ -23,11 +23,7 @@ const LoginForm = () => {
     })
       .then(res=>{
         dispatch(setUser({Username: Username, Role: res.data}));
-        if (res.data === "admin" || res.data === "mod") { // Access Role property
-          navigate('/adminDashBoard');
-        } else if (res.data === "user") {
-          navigate('/userDashBoard');
-        }
+        if (res.data) {navigate('/Dashboard')}
       })
       .catch(err=>console.log(err.response.data))
   }

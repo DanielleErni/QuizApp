@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 const LandingPage = () => {
   return (
     <div>
-        <div className="h-[100vh] text-white p-[1rem] flex flex-col justify-between">
+        <div className="h-[100vh] text-white flex flex-col justify-between">
             <div className="bg-[#D9D9D9] h-[5.5rem] m-[1.5rem] rounded-md">
 
             </div>

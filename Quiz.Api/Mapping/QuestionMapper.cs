@@ -1,17 +1,25 @@
-﻿using Quiz.Api.Dto;
-using Quiz.Api.Models;
+﻿using Quiz.Api.Models;
+using static Quiz.Api.Dto.QuestionDto;
 
 namespace Quiz.Api.Mapping
 {
     public static class QuestionMapper
     {
-        public static QuestionDto.QuestionDetailsDto MapToQuestionDetailsDto(this QuestionEntity questionEntity)
+        public static QuestionDetailsDto MapToQuestionDetailsDto(this QuestionEntity questionEntity)
         {
-            return new QuestionDto.QuestionDetailsDto
+            return new QuestionDetailsDto
             {
                 QuestionId = questionEntity.QuestionId,
                 Question = questionEntity.Question,
                 Answer = questionEntity.Answer
+            };
+        }
+        public static QuestionEntity MapToQuestionEntity(this CreateQuestionDto questionDto)
+        {
+            return new QuestionEntity
+            {
+                Question = questionDto.Question,
+                Answer = questionDto.Answer
             };
         }
     }
