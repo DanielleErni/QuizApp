@@ -1,10 +1,8 @@
 import {useForm, useFieldArray} from "react-hook-form"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AxiosCreateQuizList } from "../axios/axiosConfig";
 
 const CreateQuiz = () => {
-
-    const navigate = useNavigate()
 
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -19,16 +17,24 @@ const CreateQuiz = () => {
 
     const onSubmit = async(data) => {
         console.log(data);
-        await AxiosCreateQuizList.post('', data)
-            .then(res=>{console.log(res.data)})
-            .catch(err=>console.log(err))
+        // await AxiosCreateQuizList.post('', data)
+        //     .then(res=>{console.log(res.data)})
+        //     .catch(err=>console.log(err))
     };
     
 
   return (
     <div className="">
-
+        
         <div className="bg-[#464545] min-h-screen rounded-md p-[1rem]">
+            
+            <Link to={"/DashBoard"}>
+                <button className="bg-yellow-600 px-[1rem] py-[0.3rem] rounded-md border-black border-[0.1rem] text-white flex items-end"
+                >
+                    Return
+                </button>
+            </Link>
+
             <form onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-[0.7rem] items-end "
             >
@@ -56,7 +62,7 @@ const CreateQuiz = () => {
                         )}
 
                         <div>
-                            <label htmlFor="question">Question:</label>
+                            <label htmlFor="question">Question {index+1}:</label>
                             <input
                                 className="w-full rounded-md px-[0.2rem] border-black border-[0.1rem] mt-[0.2rem]"
                                 id={`quiz[${index}].question`}
@@ -79,11 +85,7 @@ const CreateQuiz = () => {
                         
                     </div>
                 ))}
-                <button className="bg-yellow-600 px-[1rem] py-[0.3rem] rounded-md border-black border-[0.1rem] text-white"
-                    onClick={()=>{navigate("/Dashboard")}}
-                >
-                    Return
-                </button>
+
                 <button onClick={() => append({ question: '', answer: '' })} className="bg-blue-700 px-[1rem] py-[0.3rem] rounded-md border-black border-[0.1rem] text-white">
                     Add
                 </button>

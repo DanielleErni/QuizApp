@@ -33,7 +33,7 @@ const App = () => {
           
           {/*admin routes */}
           <Route path="/CreateQuiz" element={<CreateQuiz/>}/>
-          <Route path="/EditQuiz" element={<EditQuiz/>}/>
+          <Route exact path="/Edit/:id" element={<EditQuiz/>}/>
           
         </Routes>
     </div>

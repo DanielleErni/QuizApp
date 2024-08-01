@@ -8,17 +8,16 @@ import { AxiosGetQuizList } from "../axios/axiosConfig"
 const Dashboard = () => {
   const [IsNavDataVisible, SetIsNavDataVisible] = useState(false)
   const [QuizList, setQuizList] = useState([])
-  const [ToggleSettings, setToggleSettings] = useState([])
 
   const user = useSelector(state => state.user.User);
   const Navigate = useNavigate();
 
-  const HandleNavigateUser = () => {
-    user.Role === "user" ? 
-      Navigate('/quiz')
-      :
-      setToggleSettings(true)
-  }
+  // const HandleNavigateUser = () => {
+  //   user.Role === "user" ? 
+  //     Navigate('/quiz')
+  //     :
+  //     setToggleSettings(true)
+  // }
 
   const toggleNavButton = () => {
     SetIsNavDataVisible(!IsNavDataVisible)
@@ -28,17 +27,8 @@ const Dashboard = () => {
     await AxiosGetQuizList.get()
       .then(res => {
         setQuizList(res.data)
-        setToggleSettings(new Array(res.data.length).fill(false)) // Initialize toggle settings array
       })
       .catch(err => console.log(err))
-  }
-
-  const handleToggleSetting = (index) => {
-    setToggleSettings(prev => {
-      const newToggleSettings = [...prev]
-      newToggleSettings[index] = !newToggleSettings[index]
-      return newToggleSettings
-    })
   }
 
   useEffect(() => {
@@ -60,10 +50,7 @@ const Dashboard = () => {
               <div key={index}>
                 <QuizListComp  
                   quizData={el}
-                  HandleNavigateUser={HandleNavigateUser}
-                  userRole={user.Role}
-                  ToggleSettings={ToggleSettings[index]}
-                  handleToggleSetting={() => handleToggleSetting(index)}
+                  quizIndex={index}
                 />
               </div>
             )
