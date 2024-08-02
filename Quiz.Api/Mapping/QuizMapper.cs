@@ -20,8 +20,19 @@ namespace Quiz.Api.Mapping
             return new QuizEntity
             {
                 QuizName = quizDto.QuizName,
-                Questions = quizDto.Questions.Select(q => q.MapToQuestionEntity()).ToList()
+                Questions = quizDto.Quiz.Select(q => q.MapToQuestionEntity()).ToList()
             };
+        }
+        // Added method for UpdateQuizDto
+        public static QuizEntity MapToQuizEntity(this UpdateQuizDto quizDto, QuizEntity existingEntity)
+        {
+            existingEntity.QuizName = quizDto.QuizName;
+
+            // Update existing questions and add new ones
+            var questionEntities = quizDto.Quiz.Select(q => q.MapToQuestionEntity()).ToList();
+            existingEntity.Questions = questionEntities;
+
+            return existingEntity;
         }
     }
 }

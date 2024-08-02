@@ -18,6 +18,12 @@ const AxiosGetQuizList = axios.create({
 const AxiosCreateQuizList = axios.create({
     baseURL: `${baseUrl}/Quiz`
 })
+const AxiosUpdateQuizList = axios.create({
+    baseURL: `${baseUrl}/Quiz`
+})
 
+const AxiosDeleteQuizList = axios.create({
+    baseURL: `${baseUrl}/Quiz`
+})
 
-export {UserAuthenticate, AxiosGetQuizList, AxiosCreateQuizList}
+export {UserAuthenticate, AxiosGetQuizList, AxiosCreateQuizList, AxiosUpdateQuizList, AxiosDeleteQuizList}

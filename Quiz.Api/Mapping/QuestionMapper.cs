@@ -22,5 +22,6 @@ namespace Quiz.Api.Mapping
                 Answer = questionDto.Answer
             };
         }
+        
     }
 }

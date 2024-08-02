@@ -14,13 +14,13 @@ public class QuizDto
     public class CreateQuizDto
     {
         public required string QuizName { get; set; }
-        public List<CreateQuestionDto> Questions { get; set; } = new List<CreateQuestionDto>();
+        public List<CreateQuestionDto> Quiz { get; set; } = new List<CreateQuestionDto>();
 
     }
     public class UpdateQuizDto
     {
         public required string QuizName { get; set; }
-        public List<CreateQuestionDto> Questions { get; set; } = new List<CreateQuestionDto>();
+        public List<CreateQuestionDto> Quiz { get; set; } = new List<CreateQuestionDto>();
 
     }
     

@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage"
 import Dashboard from "./pages/Dashboard"
 import CreateQuiz from "./pages/CreateQuiz"
 import EditQuiz from "./pages/EditQuiz"
+import TakeQuiz from "./pages/TakeQuiz"
 
 /*
       <style>
@@ -29,7 +30,9 @@ const App = () => {
 
           {/*private routes */}
           <Route path="/Dashboard" element={<Dashboard/>}/>
+
           {/*guest user */}
+          <Route exact path="/Play/:id" element={<TakeQuiz/>}/>
           
           {/*admin routes */}
           <Route path="/CreateQuiz" element={<CreateQuiz/>}/>

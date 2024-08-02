@@ -42,15 +42,15 @@ const Dashboard = () => {
           if (IsNavDataVisible) SetIsNavDataVisible(false)
         }}
       >
-        <NavButton toggleNavButton={toggleNavButton} IsNavDataVisible={IsNavDataVisible} />
+        <NavButton toggleNavButton={toggleNavButton} IsNavDataVisible={IsNavDataVisible} userRole={user.Role}/>
 
-        <div className="bg-[#464545] rounded-md p-[1rem] min-h-screen ">
+        <div className="bg-[#464545] rounded-md p-[1rem] pt-[1.7rem] min-h-screen ">
           {QuizList.map((el, index) => {
             return (
               <div key={index}>
                 <QuizListComp  
                   quizData={el}
-                  quizIndex={index}
+                  userRole={user.Role}
                 />
               </div>
             )

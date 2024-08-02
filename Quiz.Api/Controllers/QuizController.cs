@@ -53,16 +53,41 @@ namespace Quiz.Api.Controllers
         }
 
 
-        // [HttpPut]
-        // //Update Quiz
-        // public async Task<ActionResult<QuizDetailsDto>> UpdateQuiz([FromBody] CreateQuizDto quiz)
-        // {
-        //     if (quiz == null)
-        //     {
-        //         return BadRequest("No data provided.");
-        //     }
+        [HttpPut("{id}")]
+        //Update Quiz
+        public async Task<ActionResult<QuizDetailsDto>> UpdateQuiz(int id, [FromBody] UpdateQuizDto quiz)
+        {
+            if (quiz == null)
+            {
+                return BadRequest("No data provided.");
+            }
             
+            var existingQuiz = await _context.Quiz.Include(q => q.Questions).FirstOrDefaultAsync(q => q.QuizId == id);
+            if(existingQuiz == null){
+                return NotFound($"Quiz with ID {id} not found");
+            }
+
+            existingQuiz = quiz.MapToQuizEntity(existingQuiz);
+            await _context.SaveChangesAsync();
+            var updatedQuizDto = existingQuiz.MapToQuizDetailsDto();
+
+            return Ok(updatedQuizDto);
             
-        // }
+        }
+
+        [HttpDelete("{id}")]
+        //Update Quiz
+        public async Task<IActionResult> DeleteQuiz(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("invalid id provided.");
+            }
+
+            await _context.Quiz.Where(q => q.QuizId == id).ExecuteDeleteAsync();
+
+            return Ok("success");
+            
+        }
     }
 }

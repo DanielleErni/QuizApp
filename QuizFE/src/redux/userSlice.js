@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = { //wag kalimutan ibalik sa empty string
     User:{
-        Username: 'admin',
-        Role: 'admin'
+        Username: '',
+        Role: ''
     }
 }
 
