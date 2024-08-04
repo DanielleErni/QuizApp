@@ -10,8 +10,7 @@ const TakeQuiz = () => {
 
     const [score, setScore] =useState(0)
     const [answers, setAnswers] = useState(quizData.quiz.map(() => ""));
-    console.log(quizData)
-
+    
     const handleInputChange = (e, index) => {
         const { value } = e.target;
         const updatedAnswers = [...answers];
@@ -32,7 +31,7 @@ const TakeQuiz = () => {
     };
 
   return (
-    <div className="bg-[#464545] rounded-md p-[1rem] min-h-screen">
+    <div className="bg-[#464545] rounded-md p-[1rem] min-h-screen ">
 
         <ReturnToDashBoard/>
 
@@ -53,7 +52,7 @@ const TakeQuiz = () => {
                 >{index+1}. {el.question}</p>
                 <input
                     id={`question-${el.id}`}
-                    className="rounded-md p-[0.1rem]"
+                    className="rounded-md p-[0.2rem] px-[0.2rem]"
                     value={answers[index]} 
                     onChange={(e) => handleInputChange(e, index)}></input>
             </div>

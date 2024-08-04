@@ -28,13 +28,17 @@ const ReactHookFormsTemp = ({submitType}) => {
   });
 
   const SuccessActionAlert = () => {
-    alert("Action Successfully Performed!")
-    navigate("/Dashboard")
+    if (confirm("Action Successfully Performed!") == true) {
+      onSubmit()
+      navigate("/Dashboard")
+    } 
+    else {
+      return null
+    }
+    
   }
 
   const onSubmit = async (data) => {
-    console.log(data);
-    //console.log(data.quiz[0].question);
     if (data.quiz == '') {
       alert("pls add atleast one question");
       return;
@@ -55,13 +59,14 @@ const ReactHookFormsTemp = ({submitType}) => {
         .catch(err=>console.log(err))
     }
   };
-
+  
   return (
     <div className=" rounded-md  min-h-screen">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-[#464545] p-[1rem] rounded-md min-h-screen"
       >
+        
 
         <div className="flex justify-between mb-[1rem]">
           <ReturnToDashBoard />

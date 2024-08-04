@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { logout } from "../redux/userSlice"
 
 const NavButton = ({IsNavDataVisible, toggleNavButton, userRole}) => {
@@ -22,19 +22,18 @@ const NavButton = ({IsNavDataVisible, toggleNavButton, userRole}) => {
       {IsNavDataVisible && 
         <>
           {userRole === 'admin' ?
-            <div className="fixed left-[3rem] top-[0.8rem] px-[0.3rem] bg-green-700 rounded-md border-black border-[0.1rem] text-white"
-            onClick={()=>{navigate("/CreateQuiz")}}
+            <Link to="/CreateQuiz" className="fixed left-[3rem] top-[0.8rem] px-[0.3rem] bg-green-700 rounded-md border-black border-[0.1rem] text-white"
             >
               Create
-            </div>
+            </Link>
             :
             null
           }
-          <div className="fixed left-[0.3rem] top-[3.5rem] px-[0.3rem] bg-black       rounded-md border-white border-[0.1rem] text-white"
+          <button className="fixed left-[0.3rem] top-[3.5rem] px-[0.3rem] bg-black rounded-md border-white border-[0.1rem] text-white cursor-pointer"
             onClick={()=>{Logout()}}
           >
             Log-out
-          </div>
+          </button>
         </>    
       }
 

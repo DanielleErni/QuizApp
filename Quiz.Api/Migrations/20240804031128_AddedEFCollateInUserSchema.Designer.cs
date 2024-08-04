@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quiz.Api.Data;
 
@@ -11,9 +12,11 @@ using Quiz.Api.Data;
 namespace Quiz.Api.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    partial class QuizContextModelSnapshot : ModelSnapshot
+    [Migration("20240804031128_AddedEFCollateInUserSchema")]
+    partial class AddedEFCollateInUserSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,8 +119,7 @@ namespace Quiz.Api.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -125,8 +127,7 @@ namespace Quiz.Api.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -135,14 +136,14 @@ namespace Quiz.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3124be2e-5230-4845-8dfa-7e57c36cd99e"),
+                            Id = new Guid("81031452-2577-4104-b1ab-248d064093c7"),
                             Password = "admin",
                             Role = "admin",
                             Username = "admin"
                         },
                         new
                         {
-                            Id = new Guid("b4c8c590-0133-4400-ba9a-ab6261fa044e"),
+                            Id = new Guid("ed138b45-c11a-4940-b330-ac46cb649c5e"),
                             Password = "user",
                             Role = "user",
                             Username = "user"

@@ -6,5 +6,5 @@ DESKTOP-F62OVDN\\MSSQLSERVER01
 "server=DESKTOP-CSKTFEA;database=QuizDB;Integrated Security=true;TrustServerCertificate=true;"
 
 
-@localhost
-"server=localhost;database=QuizAppDb;Integrated Security=true;TrustServerCertificate=true;"
+@house
+"server=DESKTOP-F62OVDN\\MSSQLSERVER01;database=QuizDB;Integrated Security=true;TrustServerCertificate=true;"

@@ -11,6 +11,12 @@ public class QuizContext(DbContextOptions<QuizContext> options) : DbContext(opti
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
+        modelBuilder.Entity<UsersEntity>(entity=>{
+            entity.Property(e => e.Username).UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.Password).UseCollation("SQL_Latin1_General_CP1_CI_AS");
+        });
             
         modelBuilder.Entity<UsersEntity>().HasData(
             new UsersEntity

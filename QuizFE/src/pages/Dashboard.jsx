@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import NavButton from "../components/NavButton"
 import QuizListComp from "../components/QuizListComp"
-import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { AxiosGetQuizList } from "../axios/axiosConfig"
 
@@ -10,14 +9,6 @@ const Dashboard = () => {
   const [QuizList, setQuizList] = useState([])
 
   const user = useSelector(state => state.user.User);
-  const Navigate = useNavigate();
-
-  // const HandleNavigateUser = () => {
-  //   user.Role === "user" ? 
-  //     Navigate('/quiz')
-  //     :
-  //     setToggleSettings(true)
-  // }
 
   const toggleNavButton = () => {
     SetIsNavDataVisible(!IsNavDataVisible)

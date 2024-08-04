@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = { //wag kalimutan ibalik sa empty string
+const initialState = { 
     User:{
-        Username: '',
-        Role: ''
+        Username: null,
+        Role: null
     }
 }
 

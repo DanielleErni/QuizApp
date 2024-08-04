@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { UserAuthenticate } from "../axios/axiosConfig"
 import {useNavigate} from 'react-router-dom'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setUser } from "../redux/userSlice"
 
 const LoginForm = () => {
@@ -11,6 +11,7 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector(state=> state.user.User)
 
   const sendData = async() =>{
     if(Username == '' || Password == ''){
@@ -28,15 +29,21 @@ const LoginForm = () => {
       .catch(err=>console.log(err.response.data))
   }
 
+  useEffect(()=>{
+    if(user.Role === 'admin' || user.Role === 'user'){
+      navigate('/Dashboard')
+    }
+  },[])
+  
   return (
-    <div className="bg-[#D9D9D9] h-min m-[1.5rem] rounded-md pb-[0.9rem] pt-[0.8rem] px-[1rem] flex flex-col">
+    <div className="bg-gray-700 mt-[18rem] h-min m-[1.5rem] rounded-md pb-[0.9rem] pt-[0.8rem] px-[1rem] flex flex-col">
 
 
-      <div>
-        <label className="text-black mb-[0.3rem]">
+      <div className="s:flex flex-row gap-[0.5rem]">
+        <label className="text-white mb-[0.3rem]">
           Username:
         </label>
-        <input className="rounded-md mb-[0.4rem] text-black border-[0.1rem] border-black" 
+        <input className="rounded-md mb-[0.6rem] text-black border-[0.1rem] border-black w-full p-[0.2rem] px-[0.2rem]" 
           type="text"
           value={Username}
           required
@@ -45,12 +52,12 @@ const LoginForm = () => {
       </div>
       
           
-      <div>
-        <label className="text-black mb-[0.3rem]">
+      <div className="s:flex flex-row gap-[0.75rem]">
+        <label className="text-white mb-[0.3rem]">
           Password:
         </label>
 
-        <input className="rounded-md text-black mb-[0.6rem] border-[0.1rem] border-black" 
+        <input className="rounded-md text-black mb-[0.6rem] border-[0.1rem] border-black w-full p-[0.2rem] px-[0.2rem]" 
           type="password"
           value={Password}
           required
@@ -61,7 +68,7 @@ const LoginForm = () => {
 
       <div className="flex justify-end">
         <button
-          className="text-black bg-green-500 p-[0.3rem] px-[0.5rem] rounded-md border-[0.1rem] border-black"
+          className="text-white bg-green-500 p-[0.3rem] px-[0.5rem] rounded-md border-[0.1rem] border-black"
           onClick={()=>{sendData()}}
           
         >
