@@ -25,7 +25,8 @@ namespace Quiz.Api.Controllers
                 return BadRequest("No user provided.");
             }
             var userData = await _context.Users
-                                    .FirstOrDefaultAsync(u => u.Username == user.Username && u.Password == user.Password);
+                                    .FirstOrDefaultAsync(u => EF.Functions.Collate(u.Username, "SQL_Latin1_General_CP1_CS_AS") == user.Username 
+                                       && u.Password == user.Password);
             if(userData==null){return Unauthorized("Credentials Error");}
             
 

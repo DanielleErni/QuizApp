@@ -9,6 +9,7 @@ import EditQuiz from "./pages/EditQuiz"
 import TakeQuiz from "./pages/TakeQuiz"
 
 
+
 /*
       <style>
         {`* {outline: solid red;}`}
@@ -20,7 +21,7 @@ const App = () => {
   const isAuthenticated = user.Role === "admin" || user.Role === "user";
 
   return (
-    <div className='font-bold bg-cover bg-center bg-[url("https://image.freepik.com/free-vector/quiz-abstract-background_255524-114.jpg")] p-[1rem] '>
+    <div className='font-bold bg-cover bg-center bg-[url("https://image.freepik.com/free-vector/quiz-abstract-background_255524-114.jpg")] p-[1rem] m:p-[2rem] l:p-[3rem] xl:p-[4rem]'>
 
       <style>
         {
@@ -48,6 +49,9 @@ const App = () => {
             element={isAuthenticated && user.Role == 'admin' ? <EditQuiz/> : <Navigate to="/"/>}
           />
           
+          {/*catch all routes */}
+          <Route path="*" element={<Navigate to="/" />} />
+
         </Routes>
     </div>
   )

@@ -35,7 +35,7 @@ const Dashboard = () => {
       >
         <NavButton toggleNavButton={toggleNavButton} IsNavDataVisible={IsNavDataVisible} userRole={user.Role}/>
 
-        <div className="bg-[#464545] rounded-md p-[1rem] pt-[1.7rem] min-h-screen ">
+        <div className="bg-[#464545] rounded-md p-[1rem] pt-[1.7rem] min-h-screen s:p-[1.5rem] m:p-[2rem] l:p-[2.5rem] xl:p-[3rem]">
           {QuizList.map((el, index) => {
             return (
               <div key={index}>

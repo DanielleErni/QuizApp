@@ -26,12 +26,12 @@ const TakeQuiz = () => {
             }
         });
         setScore(newScore);
-        alert(`Congrats NIgga your score is: ${newScore}/${quizData.quiz.length}`);
+        alert(`Congrats your score is: ${newScore}/${quizData.quiz.length}`);
         navigate("/dashboard");
     };
 
   return (
-    <div className="bg-[#464545] rounded-md p-[1rem] min-h-screen ">
+    <div className="bg-[#464545] rounded-md p-[1rem] min-h-screen s:p-[1.5rem] m:p-[2rem] l:p-[2.5rem] xl:p-[3rem]">
 
         <ReturnToDashBoard/>
 
