@@ -8,31 +8,27 @@ const LoginForm = () => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.User);
 
   const sendData = async () => {
-    if (Username == "" || Password == "") {
-      alert("Please fill in all fields");
+    if (Username === "" || Password === "") {
+      setErrorMsg("Please fill in all fields");
       return;
     }
-    await UserAuthenticate.post("", {
-      Username: Username,
-      Password: Password,
-    })
-      .then((res) => {
-        dispatch(setUser({ Username: Username, Role: res.data }));
-        if (res.data) {
-          navigate("/Dashboard");
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          setErrorMsg("Username/Password Incorrect");
-        }
-      });
+    try {
+      const res = await UserAuthenticate.post("", { Username, Password });
+      dispatch(setUser({ Username, Role: res.data }));
+      navigate("/Dashboard");
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        setErrorMsg("Username/Password Incorrect");
+      } else {
+        setErrorMsg("An error occurred. Please try again.");
+      }
+    }
   };
 
   useEffect(() => {
@@ -42,45 +38,42 @@ const LoginForm = () => {
   }, []);
 
   return (
-    <div className="bg-gray-700 relative bottom-[-6.7rem] h-min m-[1.5rem] rounded-md pb-[0.9rem] pt-[0.8rem] px-[1rem] flex flex-col m:bottom-[-9rem] l:bottom-[-11rem]">
-      {errorMsg && <span className="text-red-300 text-center mb-[0.5rem]">{errorMsg}</span>}
-      <div className="s:flex flex-row gap-[0.5rem]">
-        <label className="text-white mb-[0.3rem]">Username:</label>
+    <div className="bg-gradient-to-b from-gray-800 to-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md mx-auto ">
+      {errorMsg && (
+        <div className="bg-red-500 text-white p-3 rounded-lg mb-4 text-center">
+          {errorMsg}
+        </div>
+      )}
+      <h2 className="text-white text-3xl font-extrabold mb-6 text-center">Welcome To QuizWiz!</h2>
+      <div className="mb-4">
+        <label className="block text-gray-300 text-sm font-bold mb-2">Username</label>
         <input
-          className="rounded-md mb-[0.6rem] text-black border-[0.1rem] border-black w-full p-[0.2rem] px-[0.2rem]"
           type="text"
+          className="w-full px-4 py-3 text-gray-900 rounded-lg border border-gray-600 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
           value={Username}
-          required
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => {setUsername(e.target.value); setErrorMsg("");}}
+          placeholder="Enter your username"
         />
       </div>
-
-      <div className="s:flex flex-row gap-[0.75rem]">
-        <label className="text-white mb-[0.3rem]">Password:</label>
-
+      <div className="mb-6">
+        <label className="block text-gray-300 text-sm font-bold mb-2">Password</label>
         <input
-          className="rounded-md text-black mb-[0.6rem] border-[0.1rem] border-black w-full p-[0.2rem] px-[0.2rem]"
           type="password"
+          className="w-full px-4 py-3 text-gray-900 rounded-lg border border-gray-600 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
           value={Password}
-          required
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {setPassword(e.target.value); setErrorMsg("");}}
+          placeholder="Enter your password"
         />
       </div>
-
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center space-x-4">
         <button
-          className="text-white bg-green-500 p-[0.3rem] px-[0.5rem] rounded-md border-[0.1rem] border-black"
-          onClick={() => {
-            sendData();
-          }}
+          className="w-full py-6 bg-gradient-to-r from-green-400 to-green-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-green-500 m:py-3"
+          onClick={sendData}
         >
           Login
         </button>
-      </div>
-
-      <div className="flex justify-end mt-[0.3rem]">
         <button
-          className="text-white bg-gray-500 p-[0.3rem] px-[0.5rem] rounded-md border-[0.1rem] border-black"
+          className="w-full py-3 bg-gradient-to-r from-gray-500 to-gray-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-gray-500 xs:px-3 "
           onClick={() => {
             dispatch(setUser({ Username: "Guest", Role: "user" }));
             navigate("/Dashboard");

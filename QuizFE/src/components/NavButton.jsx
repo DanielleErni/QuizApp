@@ -1,44 +1,104 @@
-import { useDispatch, useSelector } from "react-redux"
-import { useNavigate, Link } from "react-router-dom"
-import { logout } from "../redux/userSlice"
+import { useDispatch } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { logout } from "../redux/userSlice";
 
-const NavButton = ({IsNavDataVisible, toggleNavButton, userRole}) => {
-  
-  const dispatch = useDispatch()
-  //const user = useSelector()
-  const navigate = useNavigate()
+const NavButton = ({ IsNavDataVisible, toggleNavButton, userRole }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const Logout = ()=>{
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const modalRef = useRef(null);
+
+  const handleLogout = () => {
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
     dispatch(logout());
-    navigate("/")
-  }
+    navigate("/");
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutModal(false);
+  };
+
+  // Close modal when clicking outside
+  const handleClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      cancelLogout();
+    }
+  };
+
+  useEffect(() => {
+    if (showLogoutModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showLogoutModal]);
+
   return (
-    <div className="flex ">
-      <button className="-rotate-45 fixed left-[0.6rem] text-white font-bold h-[1.5rem] w-[1.5rem] bg-red-600 border-[0.1rem] border-white s:h-[2rem] s:w-[2rem] s:left-[0.49rem] m:h-[2.5rem] m:w-[2.5rem] m:left-[1rem] l:h-[3rem] l:w-[3rem] l:left-[1.8rem] xl:h-[4rem] xl:w-[4rem] xl:left-[2rem]"
+    <div className="fixed z-50 flex flex-col">
+      <button
+        className="rotate-45 text-white font-bold h-8 w-8 bg-indigo-600 border border-gray-400 transition-transform duration-500 ease-in-out hover:bg-indigo-700 transform hover:rotate-[360deg]"
         onClick={toggleNavButton}
       >
+        {/* Icon */}
       </button>
 
-      {IsNavDataVisible && 
-        <>
-          {userRole === 'admin' ?
-            <Link to="/CreateQuiz" className="fixed left-[3rem] top-[0.8rem] px-[0.3rem] bg-green-700 rounded-md border-white border-[0.1rem] text-white m:left-[5rem] m:top-[2.3rem] l:text-[1.5rem] l:left-[6rem] l:top-[3rem] xl:text-[2rem] xl:left-[8rem] xl:top-[4.5rem]"
-            >
-              Create
-            </Link>
-            :
-            null
-          }
-          <button className="fixed left-[0.3rem] top-[3.5rem] px-[0.3rem] bg-black rounded-md border-white border-[0.1rem] text-white cursor-pointer s:top-[4rem] m:top-[5.6rem] l:text-[1.5rem] l:top-[7.2rem] xl:text-[2rem] xl:top-[10rem]" 
-            onClick={()=>{Logout()}}
+      <div
+        className={`fixed top-0 left-0 z-40 flex flex-col space-y-4 bg-gray-800 h-screen w-[50vw] p-6 transition-all duration-500 ease-in-out transform m:w-[30vw] l:w-[20vw] ${
+          IsNavDataVisible ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
+        }`}
+      >
+        {userRole === "admin" && (
+          <Link
+            to="/CreateQuiz"
+            className="bg-teal-500 px-2 py-2 rounded-md text-white text-center transition-colors duration-300 hover:bg-teal-600"
           >
-            Log-out
-          </button>
-        </>    
-      }
+            Create Quiz
+          </Link>
+        )}
+        <button
+          className="bg-red-600 px-4 py-2 rounded-md text-white transition-colors duration-300 hover:bg-red-700"
+          onClick={handleLogout}
+        >
+          Log-out
+        </button>
+      </div>
 
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div
+            ref={modalRef}
+            className="bg-gray-800 text-gray-200 p-6 rounded-md shadow-lg max-w-sm w-full mx-[2rem] xs:mx-[3rem] s:mx-[4rem]"
+          >
+            <p className="text-lg mb-4">Are you sure you want to log out?</p>
+            <div className="flex justify-end gap-4">
+              <button
+                className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 py-2 rounded-md transition-all duration-300 ease-in-out"
+                onClick={confirmLogout}
+              >
+                Confirm
+              </button>
+              <button
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-md transition-all duration-300 ease-in-out"
+                onClick={cancelLogout}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default NavButton
+export default NavButton;
