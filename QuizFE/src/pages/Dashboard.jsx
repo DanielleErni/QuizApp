@@ -29,7 +29,7 @@ const Dashboard = () => {
   return (
     <>
       <div
-        className="relative min-h-screen z-10 bg-indigo-900" // Indigo background to match palette
+        className="relativez-10  bg-indigo-900 rounded-md" // Indigo background to match palette
         onClick={() => {
           if (IsNavDataVisible) SetIsNavDataVisible(false);
         }}
@@ -41,7 +41,7 @@ const Dashboard = () => {
         />
 
         <div
-          className={`min-h-screen rounded-md flex flex-col p-6 transition-all duration-500 ease-in-out bg-gray-900 text-gray-300 ${
+          className={`rounded-md flex flex-col p-6 transition-all duration-500 ease-in-out bg-gray-900 text-gray-300 ${
             IsNavDataVisible ? "blur-sm" : "blur-none"
           }`}
         >
@@ -53,7 +53,7 @@ const Dashboard = () => {
                   key={index}
                   className="bg-indigo-800 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-out"
                 >
-                  <QuizListComp quizData={el} userRole={user.Role} />
+                  <QuizListComp quizData={el} userRole={user.Role} IsNavDataVisible={IsNavDataVisible} SetIsNavDataVisible={SetIsNavDataVisible} />
                 </div>
               ))
             ) : (

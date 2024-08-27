@@ -56,11 +56,28 @@ const TakeQuiz = () => {
         });
         setScore(newScore);
 
+        // Determine the message and toast type based on the score
+        let message = "";
+        let toastType = toast.success; // Default to success
+        if (newScore === 0) {
+            message = "Try again!";
+            toastType = toast.error;
+        } else if (newScore < quizData.quiz.length / 2) {
+            message = "Nice try!";
+            toastType = toast.warning;
+        } else if (newScore < quizData.quiz.length) {
+            message = "Good job!";
+            toastType = toast.success;
+        } else {
+            message = "Congrats! You got a perfect score!";
+            toastType = toast.success;
+        }
+
         // Disable all buttons/inputs until confetti & toast finish
         setIsDisabled(true);
         setShowConfetti(true);
 
-        toast.success(`Congrats! Your score is: ${newScore}/${quizData.quiz.length}`, {
+        toastType(`${message} Your score is: ${newScore}/${quizData.quiz.length}`, {
             position: "top-center",
             autoClose: 2500,
             className: "text-xs sm:text-sm bg-gray-900 border border-gray-600 text-gray-200 p-3 rounded-md shadow-lg ",

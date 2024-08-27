@@ -9,6 +9,7 @@ const NavButton = ({ IsNavDataVisible, toggleNavButton, userRole }) => {
 
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const modalRef = useRef(null);
+  const navRef = useRef(null);
 
   const handleLogout = () => {
     setShowLogoutModal(true);
@@ -25,13 +26,17 @@ const NavButton = ({ IsNavDataVisible, toggleNavButton, userRole }) => {
 
   // Close modal when clicking outside
   const handleClickOutside = (e) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
+    if (
+      navRef.current && !navRef.current.contains(e.target) &&
+      modalRef.current && !modalRef.current.contains(e.target)
+    ) {
+      toggleNavButton();
       cancelLogout();
     }
   };
 
   useEffect(() => {
-    if (showLogoutModal) {
+    if (IsNavDataVisible || showLogoutModal) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -40,7 +45,7 @@ const NavButton = ({ IsNavDataVisible, toggleNavButton, userRole }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showLogoutModal]);
+  }, [IsNavDataVisible, showLogoutModal]);
 
   return (
     <div className="fixed z-50 flex flex-col">
@@ -51,8 +56,13 @@ const NavButton = ({ IsNavDataVisible, toggleNavButton, userRole }) => {
         {/* Icon */}
       </button>
 
+      {IsNavDataVisible && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+      )}
+
       <div
-        className={`fixed top-0 left-0 z-40 flex flex-col space-y-4 bg-gray-800 h-screen w-[50vw] p-6 transition-all duration-500 ease-in-out transform m:w-[30vw] l:w-[20vw] ${
+        ref={navRef}
+        className={`fixed top-0 left-0 z-50 flex flex-col space-y-4 bg-gray-800 h-screen w-[50vw] p-6 transition-all duration-500 ease-in-out transform m:w-[30vw] l:w-[20vw] ${
           IsNavDataVisible ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
         }`}
       >
